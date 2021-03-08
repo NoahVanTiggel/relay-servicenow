@@ -8,7 +8,7 @@ The following are supported actions:
 
 |   Type    |  Name              |
 |-----------|--------------------|
-| Step      | [servicenow-step-incidents-create](/steps/servicenow-step-incidents-create)  | 
+| Step      | [servicenow-step-incidents-create](/steps/incidents-create)  | 
 
 
 ## Contributing
