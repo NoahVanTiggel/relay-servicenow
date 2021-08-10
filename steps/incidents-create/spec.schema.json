@@ -54,11 +54,15 @@
     },
     "state": {
       "type": "integer",
-      "description": "State of the incident"
+      "description": "State of the incident (e.g. New)"
     }
   },
   "required": [
-    "shortDescription"
+    "shortDescription",
+    "description",
+    "priority",
+    "impact",
+    "state"
   ],
   "additionalProperties": false
 }
