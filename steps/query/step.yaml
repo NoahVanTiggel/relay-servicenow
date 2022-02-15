@@ -1,0 +1,38 @@
+apiVersion: integration/v1
+kind: Step
+name: query
+version: 1
+summary: Query ServiceNow
+description: This ServiceNow step container runs a query.
+icon:
+build:
+  apiVersion: build/v1
+  kind: Docker
+
+publish:
+  repository: relaysh/servicenow-step-query
+
+schemas:
+  spec:
+    source: file
+    file: spec.schema.json
+  outputs:
+    source: file
+    file: outputs.schema.json
+
+examples:
+  - summary: Query ServiceNow
+    content:
+      apiVersion: v1
+      kind: Step
+      name: snow-query
+      image: relaysh/servicenow-step-query
+      spec:
+        servicenow:
+          connection: !Connection { type: servicenow, name: my-snow-account }
+        resource: '/table/mytable'
+        query: 'myquery'
+        priority: '1'
+        arguments:
+          limit: 30
+          fields: ["field1", "field2"]
