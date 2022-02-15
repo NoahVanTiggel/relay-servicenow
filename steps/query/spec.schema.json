@@ -47,6 +47,10 @@
     "arguments": {
       "type": "object",
       "description": "Arguments to use"
+    },
+    "filter": {
+      "type": "string",
+      "description": "Optional Python lambda to filter data"
     }
   },
   "required": [
