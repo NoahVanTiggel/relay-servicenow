@@ -25,10 +25,14 @@ resource = c.resource(api_path=relay.get(D.resource))
 # Execute the query
 iterable_content = resource.get(relay.get(D.query), **arguments).all()
 
-# Filter using a Python lambda
+# Set record count
+relay.outputs.set('record_count', len(iterable_content))
+
+# Filter using a Python lambda and set filtered record count
 if pyfilter:
     pyfilter = eval(pyfilter)
     iterable_content = list(filter(pyfilter, iterable_content))
+    relay.outputs.set('filtered_record_count', len(iterable_content))
 
 # Set the output
 relay.outputs.set('output', iterable_content)
