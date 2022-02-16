@@ -25,14 +25,14 @@ examples:
     content:
       apiVersion: v1
       kind: Step
-      name: snow-query
+      name: query-servicenow
       image: relaysh/servicenow-step-query
       spec:
         servicenow:
           connection: !Connection { type: servicenow, name: my-snow-account }
         resource: '/table/mytable'
-        query: 'myquery'
-        filter: 'lambda x: x["field1"] == "value1"'
+        query: 'os=Linux Red Hat^ORos=Windows'
+        filter: 'lambda x: x["hostname"].startswith("host-")'
         arguments:
           limit: 30
-          fields: ["field1", "field2"]
+          fields: ["hostname", "os"]
