@@ -12,7 +12,7 @@ This step expects the following fields in the `spec` section of a workflow step 
 | `resource`    | String   	| The resource to query                      													| None	  | Yes      |
 | `query`   	| String    | The query to run 																				| None    | Yes      | 
 | `arguments` 	| Object    | Optional arguments to use during query                   										| None    | No       |
-| `filter` 		| Object    | Optional Python lambda filter to reduce the output size										| None    | No       |
+| `filter` 		| String    | Optional Python lambda filter to reduce the output size										| None    | No       |
 
 ## Usage
 
