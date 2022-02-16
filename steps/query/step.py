@@ -11,7 +11,6 @@ user = relay.get(D.servicenow.connection.user)
 password = relay.get(D.servicenow.connection.password)
 arguments = relay.get(D.arguments)
 pyfilter = relay.get(D.filter)
-pyfilter = eval(pyfilter)
 
 c = None
 try:
@@ -28,6 +27,7 @@ iterable_content = resource.get(relay.get(D.query), **arguments).all()
 
 # Filter using a Python lambda
 if pyfilter:
+    pyfilter = eval(pyfilter)
     iterable_content = list(filter(pyfilter, iterable_content))
 
 # Set the output
