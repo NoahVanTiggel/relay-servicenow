@@ -33,7 +33,8 @@
         }
       },
       "required": [
-        "connection"
+        "connection",
+        "resource"
       ]
     },
     "resource": {
