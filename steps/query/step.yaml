@@ -1,0 +1,38 @@
+apiVersion: integration/v1
+kind: Step
+name: query
+version: 1
+summary: Query ServiceNow
+description: This ServiceNow step container runs a query.
+icon:
+build:
+  apiVersion: build/v1
+  kind: Docker
+
+publish:
+  repository: relaysh/servicenow-step-query
+
+schemas:
+  spec:
+    source: file
+    file: spec.schema.json
+  outputs:
+    source: file
+    file: outputs.schema.json
+
+examples:
+  - summary: Query ServiceNow
+    content:
+      apiVersion: v1
+      kind: Step
+      name: query-servicenow
+      image: relaysh/servicenow-step-query
+      spec:
+        servicenow:
+          connection: ${connections.servicenow.my-snow-account}
+        resource: '/table/mytable'
+        query: 'os=Linux Red Hat^ORos=Windows'
+        filter: 'lambda x: x["hostname"].startswith("host-")'
+        arguments:
+          limit: 30
+          fields: ["hostname", "os"]

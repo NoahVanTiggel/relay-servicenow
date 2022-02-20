@@ -1,0 +1,61 @@
+
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "servicenow": {
+      "type": "object",
+      "description": "A mapping of ServiceNow account configuration.",
+      "properties": {
+        "connection": {
+          "type": "object",
+          "x-relay-connectionType": "servicenow",
+          "description": "A Relay ServiceNow connection to use",
+          "properties": {
+            "host": {
+              "type": "string",
+              "description": "ServiceNow instance host"
+            },
+            "user": {
+              "type": "string",
+              "description": "ServiceNow user"
+            },
+            "password": {
+              "type": "string",
+              "description": "ServiceNow password"
+            }
+          },
+          "required": [
+            "host", 
+            "user",
+            "password"
+          ]
+        }
+      },
+      "required": [
+        "connection"
+      ]
+    },
+    "resource": {
+      "type": "string",
+      "description": "Resource to query"
+    },
+    "query": {
+      "type": "string",
+      "description": "Query to run"
+    },
+    "arguments": {
+      "type": "object",
+      "description": "Arguments to use"
+    },
+    "filter": {
+      "type": "string",
+      "description": "Optional Python lambda to filter data (experimental)"
+    }
+  },
+  "required": [
+    "servicenow",
+    "resource"
+  ],
+  "additionalProperties": false
+}

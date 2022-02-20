@@ -1,0 +1,23 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"type": "object",
+	"properties": {
+		"output": {
+			"type": "object",
+			"description": "Query output"
+		},
+		"record_count": {
+			"type": "integer",
+			"description": "Total number of records retrieved from ServiceNow"
+		},
+		"filtered_record_count": {
+			"type": "integer",
+			"description": "Number of records after Python filter is applied"
+		}
+	},
+	"required": [
+		"output",
+		"record_count"
+	],
+	"additionalProperties": false
+}
