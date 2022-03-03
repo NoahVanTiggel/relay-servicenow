@@ -32,7 +32,7 @@ step:
   image: relaysh/servicenow-step-query
   spec:
     servicenow:
-      connection: !Connection { type: servicenow, name: my-snow-account }
+      connection: ${connections.servicenow.my-servicenow-connection}
     resource: '/table/mytable'
     query: 'os=Linux Red Hat^ORos=Windows'
     filter: 'lambda x: x["hostname"].startswith("host-")'
