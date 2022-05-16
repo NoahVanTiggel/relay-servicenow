@@ -9,29 +9,51 @@ relay = Interface()
 host = relay.get(D.servicenow.connection.host)
 user = relay.get(D.servicenow.connection.user)
 password = relay.get(D.servicenow.connection.password)
-arguments = relay.get(D.arguments)
-pyfilter = relay.get(D.filter)
+
+
+# get the spec object to process optional arguments
+spec = relay.get()
+
+# arguments are optional
+arguments = {}
+if 'arguments' in spec:
+    arguments = spec['arguments']
+
+# filter is optional
+pyfilter = None
+if 'filter' in spec:
+    pyfilter = spec['filter']
 
 c = None
 try:
     c = pysnow.Client(host=host, user=user, password=password)
 except:
-    print('ERROR: Failed to authenticate to ServiceNow. Exiting.') 
+    print('ERROR: Failed to authenticate to ServiceNow. Exiting.')
     exit(1)
 
-# Define a resource
+# Define a ServiceNow resource
 resource = c.resource(api_path=relay.get(D.resource))
 
+# query is optional
+query = {}
+if 'query' in spec:
+    query = spec['query']
+
 # Execute the query
-iterable_content = resource.get(relay.get(D.query), **arguments).all()
+iterable_content = resource.get(query, **arguments).all()
 
-# Set record count
+# Log and set record count
+print(f'Retrieved {len(iterable_content)} records using query "{query}".')
 relay.outputs.set('record_count', len(iterable_content))
+# print(json.dumps(iterable_content, indent=1))
 
-# Filter using a Python lambda and set filtered record count
+# Filter using a Python lambda and log and set filtered record count
 if pyfilter:
-    pyfilter = eval(pyfilter)
-    iterable_content = list(filter(pyfilter, iterable_content))
+    filter_expr = eval(pyfilter)
+    iterable_content = list(filter(filter_expr, iterable_content))
+    print(
+        f'Filtered to {len(iterable_content)} records using filter "{pyfilter}".')
+    # print(json.dumps(iterable_content, indent=1))
     relay.outputs.set('filtered_record_count', len(iterable_content))
 
 # Set the output

@@ -16,7 +16,7 @@
               "type": "string",
               "description": "ServiceNow instance host"
             },
-            "secretAccessKey": {
+            "user": {
               "type": "string",
               "description": "ServiceNow user"
             },
@@ -50,12 +50,12 @@
     },
     "filter": {
       "type": "string",
-      "description": "Optional Python lambda to filter data"
+      "description": "Optional Python lambda to filter data (experimental)"
     }
   },
   "required": [
-    "resource",
-    "query"
+    "servicenow",
+    "resource"
   ],
   "additionalProperties": false
 }
