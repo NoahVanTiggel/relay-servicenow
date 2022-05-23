@@ -19,11 +19,6 @@ arguments = {}
 if 'arguments' in spec:
     arguments = spec['arguments']
 
-# filter is optional
-pyfilter = None
-if 'filter' in spec:
-    pyfilter = spec['filter']
-
 c = None
 try:
     c = pysnow.Client(host=host, user=user, password=password)
@@ -39,6 +34,17 @@ query = {}
 if 'query' in spec:
     query = spec['query']
 
+# filter and filterparameters are optional
+pyfilter = None
+filterparameters = []
+if 'filter' in spec:
+    pyfilter = spec['filter']
+    if 'filterparameters' in spec:
+        filterparameters = spec['filterparameters']
+        for filterparameter in filterparameters:
+            print(f'Applying parameter "{filterparameter}" to filter "{pyfilter}".')
+            pyfilter = pyfilter.replace(f'#{filterparameter}', f'filterparameters["{filterparameter}"]')
+
 # Execute the query
 iterable_content = resource.get(query, **arguments).all()
 
@@ -49,6 +55,7 @@ relay.outputs.set('record_count', len(iterable_content))
 
 # Filter using a Python lambda and log and set filtered record count
 if pyfilter:
+    print(f'Applying filter "{pyfilter}" to dataset.')
     filter_expr = eval(pyfilter)
     iterable_content = list(filter(filter_expr, iterable_content))
     print(

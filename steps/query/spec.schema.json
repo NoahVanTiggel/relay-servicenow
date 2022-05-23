@@ -48,6 +48,10 @@
       "type": "object",
       "description": "Arguments to use"
     },
+    "filterparameters": {
+      "type": "object",
+      "description": "Optional parameters to apply to the Python lambda"
+    },
     "filter": {
       "type": "string",
       "description": "Optional Python lambda to filter data (experimental)"

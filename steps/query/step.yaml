@@ -32,7 +32,9 @@ examples:
           connection: ${connections.servicenow.my-snow-account}
         resource: '/table/mytable'
         query: 'os=Linux Red Hat^ORos=Windows'
-        filter: 'lambda x: x["hostname"].startswith("host-")'
+        filterparameters:
+          hostnames: ["test1", "test2", "test3"]
+        filter: 'lambda x: x["hostname"] in #hostnames'
         arguments:
           limit: 30
           fields: ["hostname", "os"]
