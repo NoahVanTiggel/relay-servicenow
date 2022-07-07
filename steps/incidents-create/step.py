@@ -17,30 +17,16 @@ except:
     exit(1)
 
 # Define an incident table resource
-incident = c.resource(api_path='/table/incident')
+incident = c.resource(api_path=relay.get(D.resource))
 
-# Set the payload
-new_incident = {
-    'short_description': relay.get(D.shortDescription),
-    'description': relay.get(D.description),
-    'priority': relay.get(D.priority),
-    'impact': relay.get(D.impact),
-    'state': relay.get(D.state)
-}
+# Get the record object
+record = relay.get(D.record)
 
 # Create a new incident record
-result = incident.create(payload=new_incident)
+result = incident.create(payload=record)
 
 # Print the result
 r = result.all()[0]
-print('')
-print("Created the following ServiceNow incident:\n")
-print("NUMBER: ", r['number'])
-print("SHORT DESCRIPTION: ", r['short_description'])
-print("DESCRIPTION: ", r['description'])
-print("IMPACT: ", r['impact'])
-print("STATE: ", r['state'])
-print("PRIORITY: ", r['priority'])
 
 # Set the output
 print('\nSetting incident details to the output `incident`')
